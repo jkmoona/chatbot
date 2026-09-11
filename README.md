@@ -98,21 +98,17 @@ repeated at the end of the user message.
 Measured consequence: relevant chunks scored 0.269–0.544 whether or not the question matched
 the document's language, and every cross-lingual query ranked the correct document first.
 
-## Rate limits, and the one thing to do before a live demo
+## Rate limits
 
-Voyage's free tier without a payment method allows **3 requests per minute**. Every question
-and every upload costs one embedding request, so clicking through a demo quickly will hit the
-limit.
+Every question and every upload costs one Voyage embedding request. Voyage's free tier without
+a payment method allows only 3 per minute, which is not enough for anyone clicking through the
+app; adding a payment method raises it to 2000 and still spends the 200M free token grant
+first. Do that before sharing the URL.
 
-Measured by firing five questions at once: three succeeded, two retried on 429 with backoff
-of 2.4s, 4.5s and 8.3s, then returned a readable error. Note that ~14s of total backoff
-cannot outlast a 60-second rate window, so the retry absorbs a brief burst but does not
-recover a genuinely exhausted quota. That is deliberate — failing in 14s with an actionable
-message beats blocking a demo for a minute.
-
-Adding a payment method to the Voyage account raises the limit to 2000 requests per minute
-and still spends the 200M free token grant first. That is the single change worth making
-before showing this to anyone.
+The app retries a 429 with backoff of roughly 2s, 4s and 8s, then reports the limit in plain
+words. Note ~14s of total backoff cannot outlast a 60-second rate window, so the retry absorbs
+a short burst rather than recovering an exhausted quota — failing quickly with an actionable
+message beats stalling a demo for a minute.
 
 ## Cost
 
