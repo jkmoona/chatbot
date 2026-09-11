@@ -119,7 +119,13 @@ export async function deleteDocument(docId: string): Promise<boolean> {
   return true;
 }
 
-/** One row per uploaded document, aggregated from the stored chunks. */
+/**
+ * One row per uploaded document, aggregated from the stored chunks.
+ *
+ * The existence check costs a round trip but stays: the client's errors carry no
+ * status code, so a missing collection could not otherwise be told apart from a
+ * real failure, and it is the normal state before the first upload.
+ */
 export async function listDocuments(): Promise<IndexedDocument[]> {
   const { exists } = await getClient().collectionExists(qdrant.collection);
   if (!exists) return [];
