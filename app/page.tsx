@@ -1,6 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useRef, useState } from "react";
+import Markdown from "react-markdown";
 
 type Source = {
   id: string;
@@ -129,7 +130,7 @@ export default function ChatPage() {
             return (
               <div className="turn" key={index}>
                 <div className={turn.role === "user" ? "question" : "answer"}>
-                  {turn.content}
+                  {turn.role === "user" ? turn.content : <Markdown>{turn.content}</Markdown>}
                   {pending && turn.content.length === 0 && <span className="dim">searching…</span>}
                   {pending && turn.content.length > 0 && <span className="caret" />}
                 </div>

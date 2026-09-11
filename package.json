@@ -17,6 +17,7 @@
     "openai": "^7.13.0",
     "react": "^19.3.0",
     "react-dom": "^19.3.0",
+    "react-markdown": "^10.1.0",
     "unpdf": "^1.8.1",
     "voyageai": "^0.4.0"
   },

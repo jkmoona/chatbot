@@ -168,13 +168,42 @@ button.link-danger {
   font-family: var(--font-serif), Georgia, serif;
   font-size: 1.05rem;
   line-height: 1.62;
-  white-space: pre-wrap;
   overflow-wrap: anywhere;
 }
 
-/* Markdown-ish output from the model, kept quiet. */
+.answer > :first-child {
+  margin-top: 0;
+}
+
+.answer > :last-child {
+  margin-bottom: 0;
+}
+
+.answer p {
+  margin: 0 0 0.7rem;
+}
+
+.answer ul,
+.answer ol {
+  margin: 0 0 0.7rem;
+  padding-left: 1.2rem;
+}
+
+.answer li {
+  margin-bottom: 0.25rem;
+}
+
+.answer li > p {
+  margin: 0;
+}
+
 .answer strong {
   font-weight: 600;
+}
+
+.answer code {
+  font-family: var(--mono);
+  font-size: 0.85em;
 }
 
 .caret {
