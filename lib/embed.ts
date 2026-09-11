@@ -75,7 +75,7 @@ function delayFor(error: unknown, attempt: number): number {
 
 const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 
-/** Retries on 429 and 5xx. Rate limits are routine on the free tier. */
+/** Retries on 429 and 5xx, which a burst of questions can trigger. */
 async function withRetry<T>(request: () => Promise<T>): Promise<T> {
   let lastError: unknown;
 

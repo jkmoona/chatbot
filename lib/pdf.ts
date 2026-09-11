@@ -22,7 +22,7 @@ function normalise(text: string): string {
     .trim();
 }
 
-/** Extracts text per page. Page numbers are 1-based, matching the document. */
+/** Page numbers are 1-based, so they match what a reader sees. */
 export async function extractPages(bytes: Uint8Array): Promise<PdfExtraction> {
   const pdf = await getDocumentProxy(bytes);
   const { totalPages, text } = await extractText(pdf, { mergePages: false });

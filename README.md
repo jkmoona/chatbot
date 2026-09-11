@@ -17,7 +17,8 @@ Halalworld Next.js site, so the answering model is configured entirely through e
 | Vector store | Qdrant Cloud, via `@qdrant/js-client-rest` |
 | Answering | `openai` client pointed at Groq, `openai/gpt-oss-120b`, streamed |
 | PDF text | `unpdf` (per-page extraction, no worker or native deps) |
-| Styling | Hand-written CSS, no UI dependencies |
+| Answer formatting | `react-markdown` (the model replies in markdown) |
+| Styling | Hand-written CSS, no framework |
 
 ## Setup
 
@@ -57,7 +58,7 @@ start.
 4. Ask a follow-up: just `what else?`. It resolves against the previous turn.
 5. Ask something the document does not mention, or with a false premise ("How did he use
    Kubernetes there?"). It says what the document actually contains instead of playing along.
-6. Open **sources retrieved** under any answer to see which chunks were used and their
+6. Open the **sources** line under any answer to see which chunks were used and their
    similarity scores.
 7. Back on **Documents**, use **Remove** to drop a document and all of its chunks.
 
@@ -260,7 +261,7 @@ its score, filename, page and whether it passed the threshold:
 empty collection returns nothing, while a threshold set too high returns chunks and keeps
 none.
 
-**UI.** The collapsed **sources retrieved** disclosure under each answer shows the same
+**UI.** The collapsed **sources** disclosure under each answer shows the same
 chunks and scores to three decimals.
 
 Read them together:
