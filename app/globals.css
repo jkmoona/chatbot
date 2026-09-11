@@ -89,9 +89,11 @@ body {
 /* ---- type ---- */
 
 h2 {
-  font-family: var(--font-serif), Georgia, serif;
-  font-size: 1rem;
-  font-weight: 500;
+  font-size: 0.72rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--faint);
   margin: 0 0 0.9rem;
 }
 
@@ -144,30 +146,34 @@ button.link-danger {
 
 /* ---- chat thread ---- */
 
+/* The only large gap: it separates exchanges, never a question from its answer. */
 .thread {
   display: flex;
   flex-direction: column;
-  gap: 2.25rem;
-  margin-bottom: 2rem;
+  gap: 3rem;
+  margin-bottom: 2.5rem;
 }
 
-.turn {
+.exchange {
   display: flex;
   flex-direction: column;
-  gap: 0.5rem;
+  gap: 0.45rem;
 }
 
+/* Question and answer share the serif so a pair reads as one unit. */
 .question {
+  font-family: var(--font-serif), Georgia, serif;
   font-size: 0.95rem;
-  font-weight: 500;
+  color: var(--dim);
+  margin: 0;
   white-space: pre-wrap;
   overflow-wrap: anywhere;
 }
 
 .answer {
   font-family: var(--font-serif), Georgia, serif;
-  font-size: 1.05rem;
-  line-height: 1.62;
+  font-size: 1rem;
+  line-height: 1.6;
   overflow-wrap: anywhere;
 }
 
@@ -290,9 +296,19 @@ button.link-danger {
 
 /* ---- composer ---- */
 
+.composer button {
+  border: none;
+  padding: 0 0 0.4rem;
+  color: var(--dim);
+}
+
+.composer button:hover:not(:disabled) {
+  color: var(--text);
+}
+
 .composer {
   display: flex;
-  gap: 0.75rem;
+  gap: 1rem;
   align-items: flex-end;
   position: sticky;
   bottom: 0;
@@ -323,13 +339,12 @@ button.link-danger {
 /* ---- empty state ---- */
 
 .empty {
-  padding: 1rem 0 2.5rem;
+  padding: 0.5rem 0 2rem;
 }
 
 .empty p {
   margin: 0;
-  font-family: var(--font-serif), Georgia, serif;
-  font-size: 1.05rem;
+  font-size: 0.9rem;
   color: var(--dim);
 }
 

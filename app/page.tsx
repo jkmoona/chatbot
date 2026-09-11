@@ -18,6 +18,30 @@ type Turn = {
   sources?: Source[];
 };
 
+type Exchange = {
+  question: Turn;
+  answer?: Turn;
+  /** Index of the answer in the flat list, so the caret can find the live one. */
+  answerIndex: number;
+};
+
+/**
+ * Pairs each question with the answer that follows it. State stays flat because
+ * that is the shape `/api/chat` takes; the pairing is presentational.
+ */
+function toExchanges(turns: Turn[]): Exchange[] {
+  const exchanges: Exchange[] = [];
+
+  turns.forEach((turn, index) => {
+    if (turn.role !== "user") return;
+    const next = turns[index + 1];
+    const answer = next?.role === "assistant" ? next : undefined;
+    exchanges.push({ question: turn, answer, answerIndex: index + 1 });
+  });
+
+  return exchanges;
+}
+
 const EXAMPLES = [
   "Bu kişinin iş deneyimi nedir?",
   "Which technologies does this person know?",
@@ -123,19 +147,23 @@ export default function ChatPage() {
         </div>
       ) : (
         <div className="thread">
-          {turns.map((turn, index) => {
-            const pending =
-              index === turns.length - 1 && streaming && turn.role === "assistant";
+          {toExchanges(turns).map(({ question, answer, answerIndex }) => {
+            const pending = streaming && answerIndex === turns.length - 1;
 
             return (
-              <div className="turn" key={index}>
-                <div className={turn.role === "user" ? "question" : "answer"}>
-                  {turn.role === "user" ? turn.content : <Markdown>{turn.content}</Markdown>}
-                  {pending && turn.content.length === 0 && <span className="dim">searching…</span>}
-                  {pending && turn.content.length > 0 && <span className="caret" />}
-                </div>
-                {turn.sources && turn.sources.length > 0 && (
-                  <SourcesDisclosure sources={turn.sources} />
+              <div className="exchange" key={question.content + answerIndex}>
+                <p className="question">{question.content}</p>
+                {answer && (
+                  <div className="answer">
+                    <Markdown>{answer.content}</Markdown>
+                    {pending && answer.content.length === 0 && (
+                      <span className="dim">searching…</span>
+                    )}
+                    {pending && answer.content.length > 0 && <span className="caret" />}
+                  </div>
+                )}
+                {answer?.sources && answer.sources.length > 0 && (
+                  <SourcesDisclosure sources={answer.sources} />
                 )}
               </div>
             );
